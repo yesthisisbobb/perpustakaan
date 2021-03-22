@@ -122,9 +122,22 @@ body{
 }
 
 /* UNTUK INSERT BUKU */
+#book-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 78%;
+}
 #book-insert{
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    width: 50%;
+}
+#book-insert table{
+    width: 100%;
 }
 #book-insert td{
     padding: 8px 6px;
@@ -134,5 +147,15 @@ body{
 }
 #rmv-penulis{
     margin-left: 8px;
+}
+#add-buku{
+    width: fit-content;
+
+    margin-top: 12px;
+}
+
+#book-list{
+    width: 100%;
+    margin-top: 48px;
 }
 /* AKHIR INSERT BUKU */

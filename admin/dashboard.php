@@ -6,10 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-
     <?php include("../components/lib.php"); ?>
-    <link rel="stylesheet" href="dashboard.css">
 
+    <!-- JQUERY DATATABLES -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <!-- STYLING -->
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
@@ -60,13 +64,28 @@
 </html>
 
 <script>
+    let COMP_DEFAULT = "default";
+    let COMP_BUKU = "buku";
+
     let navClosed = false;
     let firstClosingHappened = false;
 
     function fillMain(comp) {
-        $("#main .content").load("insertbuku.php");
+        if (comp === COMP_DEFAULT) {
+            //
+        } else if (comp === COMP_BUKU) {
+            $("#main .content").load("buku.php", function() {
+                $("#book-table").DataTable({
+                    "ajax": {
+                        "url": "../processes/getallbuku.php",
+                        "type": "GET"
+                    }
+
+                });
+            });
+        }
     }
-    fillMain("default");
+    fillMain(COMP_BUKU);
 
     $(document).ready(function() {
         $("#nav-close").click(function() {
