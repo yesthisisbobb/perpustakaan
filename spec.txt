@@ -1,0 +1,13 @@
+nnti ada desan slide" di halaman depan sama alamat & google mapsnya, kemudian nnti di fitur petugas bisa: 
+-mereset password dosen / mahasiswa
+-melakukan pencatatan peminjaman, pencatatan pengembalian buku
+-input data buku
+-melihat daftar katalog (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka)
+
+Sistem bisa memberikan denda kepada mahasiswa yang terlambat mengembalikan buku per hari, sistem bisa memberitahu buku yang di pinjam mau jatuh tempo untuk di kembalikan
+
+Fitur mahasiswa: bisa reset password,melakukan peminjaman secara online ( pakai kode booking), mendapat pemberitahuan jatuh tempo buku yang sudah di pinjam, melihat daftar katalog buku (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka, dapat mengajukan perpanjangan peminjaman buku
+
+Fitur Dosen:bisa reset password,melakukan peminjaman secara online ( pakai kode booking), mendapat pemberitahuan jatuh tempo buku yang sudah di pinjam, melihat daftar katalog buku (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka, dapat mengajukan perpanjangan peminjaman buku
+
+NB: daftar katalog ada status buku tersedia / tidak tersedia, sistem bisa melakukan perhitungan denda perhari untuk mahasiswa, sistem bisa mengingatkan peminjam buku yaitu dosen dan mahasiswa yang akan jatuh tempo pengembalian

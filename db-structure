@@ -1,0 +1,4 @@
+id user:
+    - 2 digit belakang tahun + 2 digit bulan +  jam (01 - 24) + menit + 3 digit urutan
+id buku:
+    - 4 digit tahun + 2 digit bulan + 2 digit hari +  4 digit urutan
