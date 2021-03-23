@@ -76,11 +76,25 @@
         } else if (comp === COMP_BUKU) {
             $("#main .content").load("buku.php", function() {
                 $("#book-table").DataTable({
+                    "paging": true,
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+                    "info": true,
                     "ajax": {
-                        "url": "../processes/getallbuku.php",
-                        "type": "GET"
-                    }
-
+                        url: "../processes/allbukudatatable.php",
+                        type: "POST"
+                    },
+                    "columnDefs": [
+                        {
+                            "targets": [0, -1, -2],
+                            "orderable": false,
+                        },
+                        {
+                            "targets": [-1, -2],
+                            "searchable": false 
+                        }
+                    ],
                 });
             });
         }
