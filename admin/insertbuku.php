@@ -15,6 +15,13 @@
             <td><label for="tt">Tanggal Terbit</label></td>
             <td><input type="date" name="tt"></td>
         </tr>
+        <tr>
+            <td><label for="penulis">Daftar Pustaka</label></td>
+            <td>
+                <input type="text" name="dp" class="dp">
+                <br><button id="add-dp" class="button-disabled"><i class="fas fa-plus"></i></button><button id="rmv-dp" class="button-disabled"><i class="fas fa-minus"></i></button>
+            </td>
+        </tr>
     </table>
     <button id="add-buku" class="button-success">Tambah buku</button>
 </div>
@@ -45,8 +52,9 @@
         if (penulisArr.length > 1) {
             for (let i = 0; i < penulisArr.length; i++) {
                 const p = penulisArr[i];
+
                 penulisDb += p;
-                if (i < penulisArr.length - 1) {
+                if (i < penulisArr.length - 2 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
                     penulisDb += ", ";
                 }
             }
@@ -54,14 +62,32 @@
             penulisDb = penulisArr[0];
         }
 
-        console.log($("#book-insert input[name='judul']").val(), penulisDb, $("#book-insert input[name='tt']").val());
+        let dpArr = [];
+        let dpDb = "";
+        $(".dp").each(function(index) {
+            dpArr = [...dpArr, $(this).val()];
+        });
+        if (dpArr.length > 1) {
+            for (let i = 0; i < dpArr.length; i++) {
+                const p = dpArr[i];
+                dpDb += p;
+                if (i < dpArr.length - 2 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
+                    dpDb += ", ";
+                }
+            }
+        } else {
+            dpDb = dpArr[0];
+        }
+
+        console.log($("#book-insert input[name='judul']").val(), penulisDb, $("#book-insert input[name='tt']").val(), dpDb);
         $.ajax({
             url: "../processes/insertbuku.php",
             method: "POST",
             data: {
                 "judul": $("#book-insert input[name='judul]'").val(),
                 "penulis": penulisDb,
-                "tt": $("#book-insert input[name='tt]'").val()
+                "tt": $("#book-insert input[name='tt]'").val(),
+                "dp": dpDb
             },
             success: function(pdata) {
                 console.log(pdata + " - " + typeof(pdata));
@@ -105,12 +131,49 @@
             $("#rmv-penulis").addClass("button-disabled");
         }
     });
+
+    $("#add-dp").click(function() {
+        if ($("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() != "") {
+            $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").after('<br><input type="text" name="dp" class="dp">');
+        }
+
+        let inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
+        if (inputAmount > 1) {
+            $("#rmv-dp").removeClass("button-disabled");
+        }
+    });
+    $("#rmv-dp").click(function() {
+        // Harus 2 kali karena tekniknya
+        let inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
+        if (inputAmount > 1) {
+            $("#book-insert table tr:nth-child(4) td:nth-child(2) br:last-of-type").remove();
+            $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").remove();
+        }
+
+        inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
+        if (inputAmount > 1) {
+            $("#rmv-dp").removeClass("button-disabled");
+        } else {
+            $("#rmv-dp").addClass("button-disabled");
+        }
+    });
+
+    // Baru bisa nambah kalo keisi - Add penulis
     $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").keyup(function() {
         // Kalo kosong
         if (!$("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").val() || $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").val() === " ") {
             $("#add-penulis").addClass("button-disabled");
         } else {
             $("#add-penulis").removeClass("button-disabled");
+        }
+    });
+    // Baru bisa nambah kalo keisi - Add Daftar Pustaka
+    $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").keyup(function() {
+        // Kalo kosong
+        if (!$("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() || $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() === " ") {
+            $("#add-dp").addClass("button-disabled");
+        } else {
+            $("#add-dp").removeClass("button-disabled");
         }
     });
 </script>

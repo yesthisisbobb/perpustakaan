@@ -145,10 +145,10 @@ body{
 #book-insert td{
     padding: 8px 6px;
 }
-#book-insert input:not(:first-child), #add-penulis{
+#book-insert input:not(:first-child), #add-penulis, #add-dp{
     margin-top: 8px;
 }
-#rmv-penulis{
+#rmv-penulis, #rmv-dp{
     margin-left: 8px;
 }
 #add-buku{
