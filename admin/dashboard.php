@@ -20,7 +20,7 @@
     <div id="nav">
         <div class="base">
             <div id="nav-close"><i class="fas fa-chevron-left"></i></div>
-            <div class="nav-item">
+            <div class="nav-item" id="dash">
                 <div class="n-left">
                     <i class="fas fa-columns"></i>
                 </div>
@@ -28,7 +28,7 @@
                     Dashboard
                 </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" id="buku">
                 <div class="n-left">
                     <i class="fas fa-book"></i>
                 </div>
@@ -36,7 +36,7 @@
                     Buku
                 </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" id="pmjn">
                 <div class="n-left">
                     <i class="fas fa-tasks"></i>
                 </div>
@@ -44,7 +44,7 @@
                     Peminjaman
                 </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" id="mnjn">
                 <div class="n-left">
                     <i class="fas fa-users"></i>
                 </div>
@@ -70,12 +70,16 @@
     let navClosed = false;
     let firstClosingHappened = false;
 
+    let dataTable;
+
     function fillMain(comp) {
         if (comp === COMP_DEFAULT) {
-            //
+            $("#dash").css("color", "royalblue");
         } else if (comp === COMP_BUKU) {
+            $("#buku").css("color", "royalblue");
+
             $("#main .content").load("buku.php", function() {
-                $("#book-table").DataTable({
+                dataTable = $("#book-table").DataTable({
                     "paging": true,
                     "processing": true,
                     "serverSide": true,
@@ -85,14 +89,13 @@
                         url: "../processes/allbukudatatable.php",
                         type: "POST"
                     },
-                    "columnDefs": [
-                        {
+                    "columnDefs": [{
                             "targets": [0, -1, -2],
                             "orderable": false,
                         },
                         {
                             "targets": [-1, -2],
-                            "searchable": false 
+                            "searchable": false
                         }
                     ],
                 });
@@ -120,5 +123,9 @@
                 $("#nav").css("transform", `translateX(-${$("#nav").width()}px)`);
             }
         });
+    });
+
+    $("#main .content").on("click", "#add-buku", function () {
+        dataTable.ajax.reload();
     });
 </script>

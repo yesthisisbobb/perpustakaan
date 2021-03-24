@@ -21,6 +21,11 @@ button, input[type=submit]{
     background-color: green;
     border-color: rgb(20, 179, 20);
 }
+.button-neutral{
+    color: rgb(15, 15, 15);
+    background-color: rgb(247, 247, 247);
+    border-color: rgb(15, 15, 15);
+}
 .button-danger{
     color: white;
     background-color: rgb(116, 2, 2);

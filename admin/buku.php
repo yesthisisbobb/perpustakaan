@@ -2,6 +2,7 @@
 include("../db/config.php");
 ?>
 <div id="book-container">
+    <!-- <div><button class="button-neutral"><i class="fas fa-plus"></i>&nbsp&nbspTambah Buku</button></div> -->
     <?php include("insertbuku.php"); ?>
     <div id="book-list">
         <table id="book-table" class="display">

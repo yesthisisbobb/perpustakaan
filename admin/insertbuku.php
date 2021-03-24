@@ -31,7 +31,7 @@
         "debug": false,
         "newestOnTop": false,
         "progressBar": false,
-        "positionClass": "toast-top-right",
+        "positionClass": "toast-top-center",
         "preventDuplicates": true,
         "onclick": null,
         "showDuration": "300",
@@ -44,6 +44,9 @@
         "hideMethod": "fadeOut"
     }
     $("#add-buku").click(function() {
+        let judul = $("#book-insert input[name='judul']").val();
+        let tt = $("#book-insert input[name='tt']").val();
+
         let penulisArr = [];
         let penulisDb = "";
         $(".penulis").each(function(index) {
@@ -54,7 +57,7 @@
                 const p = penulisArr[i];
 
                 penulisDb += p;
-                if (i < penulisArr.length - 2 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
+                if (i < penulisArr.length - 1 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
                     penulisDb += ", ";
                 }
             }
@@ -71,7 +74,7 @@
             for (let i = 0; i < dpArr.length; i++) {
                 const p = dpArr[i];
                 dpDb += p;
-                if (i < dpArr.length - 2 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
+                if (i < dpArr.length - 1 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
                     dpDb += ", ";
                 }
             }
@@ -80,28 +83,61 @@
         }
 
         console.log($("#book-insert input[name='judul']").val(), penulisDb, $("#book-insert input[name='tt']").val(), dpDb);
+        let action = "";
         $.ajax({
             url: "../processes/insertbuku.php",
             method: "POST",
+            dataType: "json",
             data: {
-                "judul": $("#book-insert input[name='judul]'").val(),
+                "judul": judul,
                 "penulis": penulisDb,
-                "tt": $("#book-insert input[name='tt]'").val(),
+                "tt": tt,
                 "dp": dpDb
             },
             success: function(pdata) {
                 console.log(pdata + " - " + typeof(pdata));
 
-                if (pdata == "IS") {
-                    toastr.success("Proses penambahan buku berhasil!", "Berhasil");
-                } else if (pdata == "DKL") {
-                    toastr.error("Data kurang lengkap", "Gagal");
+                let is1Found = false;
+                let is2Found = false;
+
+                for (let i = 0; i < pdata.length; i++) {
+                    const code = pdata[i];
+                    if (code === "IS1") {
+                        is1Found = true;
+                    }
+                    if (code === "IS2") {
+                        is2Found = true;
+                    }
+                }
+                if (is1Found && is2Found) {
+                    action = "success";
                 } else {
-                    console.log("nope");
+                    action = "failed";
                 }
             },
             error: function(error) {
                 console.error(error);
+            },
+            complete: function() {
+                if (action === "success") {
+                    toastr.success("Buku berhasil ditambahkan!", "Berhasil");
+
+                    $("#book-insert input[name='judul']").val("");
+
+                    $("#book-insert table tr:nth-child(2) td:nth-child(2) input:first-of-type").val("");
+                    $("#book-insert table tr:nth-child(2) td:nth-child(2) br:not(:first-of-type)").remove();
+                    $("#book-insert table tr:nth-child(2) td:nth-child(2) input:not(:first-of-type)").remove();
+
+                    $("#book-insert input[name='tt']").val("");
+
+                    $("#book-insert table tr:nth-child(4) td:nth-child(2) input:first-of-type").val("");
+                    $("#book-insert table tr:nth-child(4) td:nth-child(2) br:not(:first-of-type)").remove();
+                    $("#book-insert table tr:nth-child(4) td:nth-child(2) input:not(:first-of-type)").remove();
+                } else if (action === "failed") {
+                    toastr.error("Ada sesuatu yang salah!", "Gagal");
+                } else {
+                    console.log("lol");
+                }
             }
         });
 

@@ -11,3 +11,5 @@ Fitur mahasiswa: bisa reset password,melakukan peminjaman secara online ( pakai 
 Fitur Dosen:bisa reset password,melakukan peminjaman secara online ( pakai kode booking), mendapat pemberitahuan jatuh tempo buku yang sudah di pinjam, melihat daftar katalog buku (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka, dapat mengajukan perpanjangan peminjaman buku
 
 NB: daftar katalog ada status buku tersedia / tidak tersedia, sistem bisa melakukan perhitungan denda perhari untuk mahasiswa, sistem bisa mengingatkan peminjam buku yaitu dosen dan mahasiswa yang akan jatuh tempo pengembalian
+
+bob ngkok ndek fitur petugas onok laporane simple ae tapi sopo ae seng nyeleh buku ambek penerbit sifate crud ben isok nge link

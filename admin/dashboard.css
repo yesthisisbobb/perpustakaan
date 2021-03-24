@@ -62,9 +62,9 @@ body{
     -webkit-box-shadow: 3px 0px 12px -4px rgba(0,0,0,0.75);
     -moz-box-shadow: 3px 0px 12px -4px rgba(0,0,0,0.75);
 
-    background-color: rgb(245, 245, 245);
+    background-color: white;
 
-    z-index: 39;
+    z-index: 41;
 
     cursor: pointer;
 }
@@ -119,7 +119,7 @@ body{
     display: flex;
     justify-content: center;
 
-    padding-top: 24px;
+    padding-top: 48px;
     width: 95%;
 }
 
