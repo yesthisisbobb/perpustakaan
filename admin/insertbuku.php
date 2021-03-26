@@ -1,4 +1,4 @@
-<div id="book-insert">
+<div class="book-controls" id="book-insert">
     <table>
         <tr>
             <td><label for="judul">Judul</label></td>
@@ -26,23 +26,6 @@
     <button id="add-buku" class="button-success">Tambah buku</button>
 </div>
 <script>
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-center",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
     $("#add-buku").click(function() {
         let judul = $("#book-insert input[name='judul']").val();
         let tt = $("#book-insert input[name='tt']").val();
@@ -141,75 +124,5 @@
             }
         });
 
-    });
-    $("#add-penulis").click(function() {
-        if ($("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").val() != "") {
-            $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").after('<br><input type="text" name="penulis" class="penulis">');
-        }
-
-        let inputAmount = $("#book-insert table tr:nth-child(2) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#rmv-penulis").removeClass("button-disabled");
-        }
-    });
-    $("#rmv-penulis").click(function() {
-        // Harus 2 kali karena tekniknya
-        let inputAmount = $("#book-insert table tr:nth-child(2) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#book-insert table tr:nth-child(2) td:nth-child(2) br:last-of-type").remove();
-            $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").remove();
-        }
-
-        inputAmount = $("#book-insert table tr:nth-child(2) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#rmv-penulis").removeClass("button-disabled");
-        } else {
-            $("#rmv-penulis").addClass("button-disabled");
-        }
-    });
-
-    $("#add-dp").click(function() {
-        if ($("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() != "") {
-            $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").after('<br><input type="text" name="dp" class="dp">');
-        }
-
-        let inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#rmv-dp").removeClass("button-disabled");
-        }
-    });
-    $("#rmv-dp").click(function() {
-        // Harus 2 kali karena tekniknya
-        let inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#book-insert table tr:nth-child(4) td:nth-child(2) br:last-of-type").remove();
-            $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").remove();
-        }
-
-        inputAmount = $("#book-insert table tr:nth-child(4) td:nth-child(2) input").length;
-        if (inputAmount > 1) {
-            $("#rmv-dp").removeClass("button-disabled");
-        } else {
-            $("#rmv-dp").addClass("button-disabled");
-        }
-    });
-
-    // Baru bisa nambah kalo keisi - Add penulis
-    $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").keyup(function() {
-        // Kalo kosong
-        if (!$("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").val() || $("#book-insert table tr:nth-child(2) td:nth-child(2) input:last-of-type").val() === " ") {
-            $("#add-penulis").addClass("button-disabled");
-        } else {
-            $("#add-penulis").removeClass("button-disabled");
-        }
-    });
-    // Baru bisa nambah kalo keisi - Add Daftar Pustaka
-    $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").keyup(function() {
-        // Kalo kosong
-        if (!$("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() || $("#book-insert table tr:nth-child(4) td:nth-child(2) input:last-of-type").val() === " ") {
-            $("#add-dp").addClass("button-disabled");
-        } else {
-            $("#add-dp").removeClass("button-disabled");
-        }
     });
 </script>

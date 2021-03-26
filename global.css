@@ -7,6 +7,9 @@
 .rotate-180{
     transform: rotate(180deg);
 }
+input[type=text]{
+    padding: 4px 8px; 
+}
 button, input[type=submit]{
     padding: 6px 10px;
 

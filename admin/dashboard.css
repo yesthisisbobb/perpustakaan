@@ -132,20 +132,20 @@ body{
 
     width: 78%;
 }
-#book-insert{
+.book-controls{
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    width: 50%;
+    width: 60%;
 }
-#book-insert table{
+.book-controls table{
     width: 100%;
 }
-#book-insert td{
+.book-controls td{
     padding: 8px 6px;
 }
-#book-insert input:not(:first-child), #add-penulis, #add-dp{
+.book-controls input:not(:first-child), #add-penulis, #add-dp{
     margin-top: 8px;
 }
 #rmv-penulis, #rmv-dp{

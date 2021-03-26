@@ -24,10 +24,14 @@ if (isset($_POST["judul"]) && isset($_POST["penulis"]) && isset($_POST["tt"])) {
 
             $pieces = explode(", ", $_POST["dp"]);
             foreach ($pieces as $p) {
-                $command = "INSERT INTO daftar_pustaka VALUES(0, '$id', '$p')";
-                $queryDP = mysqli_query($conn, $command);
-                if ($queryDP) {
-                    $res[] = "IS2";
+                if ($p != "") {
+                    $command = "INSERT INTO daftar_pustaka VALUES(0, '$id', '$p')";
+                    $queryDP = mysqli_query($conn, $command);
+                    if ($queryDP) {
+                        $res[] = "IS2";
+                    } else {
+                        $res[] = "IG3";
+                    }
                 }
                 else{
                     $res[] = "IG2";

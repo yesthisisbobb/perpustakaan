@@ -4,7 +4,7 @@ include("gettotalbuku.php");
 
 $output = array();
 
-$selects = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, dp.buku_pustaka as pustaka";
+$selects = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, dp.id as pid, dp.buku_pustaka as pustaka";
 $froms = "FROM buku b LEFT JOIN daftar_pustaka dp ON b.id = dp.buku_utama";
 $wheres = "";
 
@@ -39,8 +39,8 @@ if ($query) {
         $temp[] = $res["tt"];
         $temp[] = $res["status"];
         $temp[] = $res["pustaka"];
-        $temp[] = "<button class='buku-actions' act='edit' bid='" . $res["id"] . "'>Edit</button>";
-        $temp[] = "<button class='buku-actions' act='del' bid='" . $res["id"] . "'>Delete</button>";
+        $temp[] = "<button class='buku-actions' act='edit' bid='" . $res["id"] . "' pid='" . $res["pid"] . "'>Edit</button>";
+        $temp[] = "<button class='buku-actions' act='del' bid='" . $res["id"] . "' pid='" . $res["pid"] . "'>Delete</button>";
 
         $data[] = $temp;
     }
