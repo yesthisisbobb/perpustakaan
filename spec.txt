@@ -1,7 +1,7 @@
 nnti ada desan slide" di halaman depan sama alamat & google mapsnya
 
 kemudian nnti di fitur petugas bisa: 
--mereset password dosen / mahasiswa
+-mereset password dosen / mahasiswa ...v
 -melakukan pencatatan peminjaman, pencatatan pengembalian buku
 -input data buku...v
 -melihat daftar katalog (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka)...v

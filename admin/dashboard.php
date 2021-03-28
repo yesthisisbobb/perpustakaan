@@ -71,6 +71,7 @@
 <script>
     let COMP_DEFAULT = "default";
     let COMP_BUKU = "buku";
+    let COMP_AKUN = "akun";
 
     let navClosed = false;
     let firstClosingHappened = false;
@@ -78,6 +79,10 @@
     let dataTable;
 
     function fillMain(comp) {
+        $(".nav-item").each(function () {
+            $(this).css("color", "black");
+        });
+
         if (comp === COMP_DEFAULT) {
             $("#dash").css("color", "royalblue");
         } else if (comp === COMP_BUKU) {
@@ -105,9 +110,34 @@
                     ],
                 });
             });
+        } else if (comp === COMP_AKUN) {
+            $("#mnjn").css("color", "royalblue");
+
+            $("#main .content").load("akun.php", function() {
+                dataTable = $("#akun-table").DataTable({
+                    "paging": true,
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+                    "info": true,
+                    "ajax": {
+                        url: "../processes/alluserdatatable.php",
+                        type: "POST"
+                    },
+                    "columnDefs": [{
+                            "targets": [-1],
+                            "orderable": false,
+                        },
+                        {
+                            "targets": [-1],
+                            "searchable": false
+                        }
+                    ],
+                });
+            });
         }
     }
-    fillMain(COMP_BUKU);
+    fillMain(COMP_AKUN);
 
     // Biar dari page lain bisa reload, UNSAFE karena script ini harus ke-load dulu sebelum yang lain
     function reloadDT() {
@@ -131,6 +161,15 @@
                 }
                 $("#nav-close i").addClass("rotate-180");
                 $("#nav").css("transform", `translateX(-${$("#nav").width()}px)`);
+            }
+        });
+        $(".nav-item").click(function() {
+            let id = $(this).attr("id");
+
+            if (id === "buku") {
+                fillMain(COMP_BUKU);
+            } else if (id === "mnjn") {
+                fillMain(COMP_AKUN);
             }
         });
     });
