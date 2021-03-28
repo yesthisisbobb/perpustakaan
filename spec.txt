@@ -3,8 +3,8 @@ nnti ada desan slide" di halaman depan sama alamat & google mapsnya
 kemudian nnti di fitur petugas bisa: 
 -mereset password dosen / mahasiswa
 -melakukan pencatatan peminjaman, pencatatan pengembalian buku
--input data buku
--melihat daftar katalog (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka)
+-input data buku...v
+-melihat daftar katalog (berdasarkan tahun, nama buku / proposal/ artikel, daftar pustaka)...v
 
 Sistem bisa memberikan denda kepada mahasiswa yang terlambat mengembalikan buku per hari, sistem bisa memberitahu buku yang di pinjam mau jatuh tempo untuk di kembalikan
 
