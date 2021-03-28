@@ -49,6 +49,7 @@ include("../db/config.php");
         "hideMethod": "fadeOut"
     }
 
+    // Nutup menu
     $("#book-control-close").click(function() {
         isInsert = false;
         isUpdate = false;
@@ -68,25 +69,74 @@ include("../db/config.php");
         let pid = $(this).attr("pid");
 
         let type = $(this).text();
+        // Kalo neken edit
         if (type === "Edit") {
             isUpdate = true;
             isInsert = false;
+
+            let content;
+
+            $.ajax({
+                url: `updatebuku.php?bid=${bid}&pid=${pid}`,
+                success: function(data) {
+                    content = data;
+                },
+                error: function(err) {
+                    console.error(err.responseText);
+                },
+                complete: function() {
+                    $("#book-controls-container").html(content);
+                }
+            });
+        }
+        if (type === "Delete") {
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Anda akan menghapus sebuah buku, apakah anda benar-benar yakin anda ingin menghapus buku ini?",
+                icon: "warning",
+                showConfirmButton: true,
+                confirmButtonText: "Ya, Hapus",
+                showCancelButton: true,
+                cancelButtonText: "Batal"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    let qsFound = false;
+
+                    console.log(bid);
+
+                    $.ajax({
+                        url: "../processes/deletebuku.php",
+                        method: "POST",
+                        data: {"bid" : bid},
+                        success: function(data) {
+                            console.log(data);
+                            sdata = JSON.parse(data);
+                            sdata.forEach(item => {
+                                if (item === "QS") qsFound = true;
+                            });
+                        },
+                        complete: function() {
+                            if (qsFound) {
+                                Swal.fire({
+                                    title: "Sukses",
+                                    text: "Buku berhasil dihapus",
+                                    icon: "success",
+                                    showConfirmButton: true
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal",
+                                    text: "Terjadi sebuah kesalahan saat menghapus buku",
+                                    icon: "error",
+                                    showConfirmButton: true
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         }
 
-        let content;
-
-        $.ajax({
-            url: `updatebuku.php?bid=${bid}&pid=${pid}`,
-            success: function(data) {
-                content = data;
-            },
-            error: function(err) {
-                console.error(err.responseText);
-            },
-            complete: function() {
-                $("#book-controls-container").html(content);
-            }
-        });
     });
 </script>
 <script>

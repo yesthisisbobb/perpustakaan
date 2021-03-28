@@ -6,13 +6,12 @@ $output = array();
 
 $selects = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, dp.id as pid, dp.buku_pustaka as pustaka";
 $froms = "FROM buku b LEFT JOIN daftar_pustaka dp ON b.id = dp.buku_utama";
-$wheres = "";
+$wheres = "WHERE (b.status = 'a' OR b.status = 'u')";
 
 if (isset($_POST["search"]["value"])) {
     $sv = $_POST["search"]["value"];
 
-    if($wheres == "") $wheres .= "WHERE";
-    $wheres .= " (b.judul LIKE '%$sv%'";
+    $wheres .= " AND (b.judul LIKE '%$sv%'";
     $wheres .= " OR b.penulis LIKE '%$sv%'";
     $wheres .= " OR dp.buku_pustaka LIKE '%$sv%')";
 }

@@ -1,4 +1,6 @@
-nnti ada desan slide" di halaman depan sama alamat & google mapsnya, kemudian nnti di fitur petugas bisa: 
+nnti ada desan slide" di halaman depan sama alamat & google mapsnya
+
+kemudian nnti di fitur petugas bisa: 
 -mereset password dosen / mahasiswa
 -melakukan pencatatan peminjaman, pencatatan pengembalian buku
 -input data buku

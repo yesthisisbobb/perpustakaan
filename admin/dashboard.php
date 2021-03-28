@@ -14,6 +14,11 @@
 
     <!-- STYLING -->
     <link rel="stylesheet" href="dashboard.css">
+
+    <!-- Sweet Alert -->
+    <script src="../vendor/sweetalert/dist/sweetalert2.all.min.js"></script>
+    <script src="../vendor/sweetalert/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="../vendor/sweetalert/dist/sweetalert2.min.css">
 </head>
 
 <body>
@@ -130,5 +135,11 @@
     });
     $("#main .content").on("click", "#update-buku", function() {
         dataTable.ajax.reload();
+    });
+    $("#main .content").on("click", ".buku-actions", function() {
+        // harus isa reload
+        if ($(this).text() === "Delete") {
+            dataTable.ajax.reload();
+        }
     });
 </script>
