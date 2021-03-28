@@ -125,7 +125,10 @@
         });
     });
 
-    $("#main .content").on("click", "#add-buku", function () {
+    $("#main .content").on("click", "#add-buku", function() {
+        dataTable.ajax.reload();
+    });
+    $("#main .content").on("click", "#update-buku", function() {
         dataTable.ajax.reload();
     });
 </script>

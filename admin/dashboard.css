@@ -132,12 +132,20 @@ body{
 
     width: 78%;
 }
+.book-options{
+    display: flex;
+    justify-content: flex-start;
+
+    width: 100%;
+    margin-top: 48px;
+    margin-bottom: 12px;
+}
 .book-controls{
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    width: 60%;
+    width: 100%;
 }
 .book-controls table{
     width: 100%;
@@ -159,7 +167,6 @@ body{
 
 #book-list{
     width: 100%;
-    margin-top: 48px;
     padding-bottom: 100px;
 }
 /* AKHIR INSERT BUKU */

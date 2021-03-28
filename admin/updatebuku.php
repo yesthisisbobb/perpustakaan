@@ -14,7 +14,7 @@ if (isset($_GET["bid"])) {
     $bid = $_GET["bid"];
     if (isset($_GET["pid"]) && $_GET["pid"] != "")  $pid = $_GET["pid"];
 
-    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, d.id as pid, d.buku_pustaka as pustaka FROM buku b LEFT JOIN daftar_pustaka d ON b.id = d.buku_utama WHERE b.id = $bid";
+    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, d.id as pid, d.buku_pustaka as pustaka FROM buku b LEFT JOIN daftar_pustaka d ON b.id = d.buku_utama WHERE b.id = '$bid'";
     if (isset($_GET["pid"]) && $_GET["pid"] != "") $command .= " AND d.id = $pid";
     $query = mysqli_query($conn, $command);
     if ($query) {
@@ -68,6 +68,70 @@ if (isset($_GET["bid"])) {
         let bid = $(this).attr("bid");
         let pid = $(this).attr("pid");
 
-        $.ajax();
+        let judul = $("#book-update input[name='judul']").val();
+        let tt = $("#book-update input[name='tt']").val();
+        let dp = $("#book-update input[name='dp']").val();
+        console.log(tt);
+
+        // TODO: ngubah nama variable kalo error
+        let penulisArr = [];
+        let penulisDb = "";
+        $(".penulis").each(function(index) {
+            penulisArr = [...penulisArr, $(this).val()];
+        });
+        if (penulisArr.length > 1) {
+            for (let i = 0; i < penulisArr.length; i++) {
+                const p = penulisArr[i];
+
+                penulisDb += p;
+                if (i < penulisArr.length - 1 && (penulisArr[penulisArr.length - 2] != "" || penulisArr[penulisArr.length - 2] != " ")) {
+                    penulisDb += ", ";
+                }
+            }
+        } else {
+            penulisDb = penulisArr[0];
+        }
+
+        let qcs1Found = false;
+        let qcs2Found = false;
+        let qcf1Found = false;
+        let qcf2Found = false;
+        $.ajax({
+            url: "../processes/updatebuku.php",
+            method: "POST",
+            data: {
+                "pid": pid,
+                "bid": bid,
+                "judul": judul,
+                "tt": tt,
+                "dp": dp,
+                "penulis": penulisDb
+            },
+            success: function(data) {
+                let asd = JSON.parse(data);
+                asd.forEach(item => {
+                    if (item == "QCS1") {
+                        qcs1Found = true;
+                    }
+                    if (item == "QCS2") {
+                        qcs2Found = true;
+                    }
+                    if (item == "QCF1") {
+                        qcf1Found = true;
+                    }
+                    if (item == "QCF2") {
+                        qcf2Found = true;
+                    }
+                });
+            },
+            complete: function() {
+                if (qcs1Found) {
+                    toastr.success("Buku berhasil diupdate!", "Berhasil");
+                }
+                if (qcs2Found) {
+                    toastr.success("Daftar Pustaka berhasil diupdate!", "Berhasil");
+                }
+            }
+        });
     });
 </script>

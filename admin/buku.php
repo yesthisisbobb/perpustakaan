@@ -2,9 +2,10 @@
 include("../db/config.php");
 ?>
 <div id="book-container">
-    <!-- <div><button class="button-neutral"><i class="fas fa-plus"></i>&nbsp&nbspTambah Buku</button></div> -->
-    <div id="book-controls-container">
-        <?php include("insertbuku.php"); ?>
+    <div id="book-controls-container"></div>
+    <div class="book-options">
+        <button class="button-neutral" id="book-control-close"><i class="fas fa-times"></i>&nbsp&nbspTutup Menu</button>
+        <button class="button-neutral" id="book-insert-show"><i class="fas fa-plus"></i>&nbsp&nbspTambah Buku</button>
     </div>
     <div id="book-list">
         <table id="book-table" class="display">
@@ -27,6 +28,9 @@ include("../db/config.php");
     </div>
 </div>
 <script>
+    let isInsert = false;
+    let isUpdate = false;
+
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -45,18 +49,35 @@ include("../db/config.php");
         "hideMethod": "fadeOut"
     }
 
+    $("#book-control-close").click(function() {
+        isInsert = false;
+        isUpdate = false;
+
+        $("#book-controls-container").html("");
+    });
+    // Munculin menu tambah buku
+    $("#book-insert-show").click(function() {
+        isInsert = true;
+        isUpdate = false;
+        $("#book-controls-container").load("insertbuku.php");
+    });
     $("#book-list").on("click", ".buku-actions", function() {
         console.log($(this).attr("bid"), $(this).attr("pid"));
 
         let bid = $(this).attr("bid");
         let pid = $(this).attr("pid");
 
+        let type = $(this).text();
+        if (type === "Edit") {
+            isUpdate = true;
+            isInsert = false;
+        }
+
         let content;
 
         $.ajax({
             url: `updatebuku.php?bid=${bid}&pid=${pid}`,
             success: function(data) {
-                console.log(data);
                 content = data;
             },
             error: function(err) {

@@ -3,8 +3,8 @@ include("../db/config.php");
 $res = array();
 
 if (isset($_POST["judul"]) && isset($_POST["penulis"]) && isset($_POST["tt"])) {
-    $judul = $_POST["judul"];
-    $penulis = $_POST["penulis"];
+    $judul = mysqli_real_escape_string($conn, $_POST["judul"]);
+    $penulis = mysqli_real_escape_string($conn, $_POST["penulis"]);
     $tt = $_POST["tt"];
 
     $id = date("Y") . date("m") . date("d");
@@ -24,6 +24,7 @@ if (isset($_POST["judul"]) && isset($_POST["penulis"]) && isset($_POST["tt"])) {
 
             $pieces = explode(", ", $_POST["dp"]);
             foreach ($pieces as $p) {
+                $p = mysqli_real_escape_string($conn, $p);
                 if ($p != "") {
                     $command = "INSERT INTO daftar_pustaka VALUES(0, '$id', '$p')";
                     $queryDP = mysqli_query($conn, $command);
