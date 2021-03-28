@@ -109,6 +109,11 @@
     }
     fillMain(COMP_BUKU);
 
+    // Biar dari page lain bisa reload, UNSAFE karena script ini harus ke-load dulu sebelum yang lain
+    function reloadDT() {
+        dataTable.ajax.reload();
+    }
+
     $(document).ready(function() {
         $("#nav-close").click(function() {
             if (navClosed) {
@@ -135,11 +140,5 @@
     });
     $("#main .content").on("click", "#update-buku", function() {
         dataTable.ajax.reload();
-    });
-    $("#main .content").on("click", ".buku-actions", function() {
-        // harus isa reload
-        if ($(this).text() === "Delete") {
-            dataTable.ajax.reload();
-        }
     });
 </script>

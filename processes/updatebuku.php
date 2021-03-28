@@ -21,9 +21,9 @@ if (isset($_POST["bid"])) {
     $bid = $_POST["bid"];
     if(isset($_POST["pid"])) $pid = $_POST["pid"];
 
-    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt";
+    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, pe.nama as penerbit, b.tanggal_terbit as tt";
     if($pid != -1) $command .= ", d.buku_pustaka as pustaka";
-    $command .= " FROM buku b";
+    $command .= " FROM buku b INNER JOIN penerbit pe ON b.penerbit = pe.id";
     if($pid != -1) $command .= " LEFT JOIN daftar_pustaka d ON b.id = d.buku_utama";
     $command .= " WHERE b.id = '$bid'";
     if ($pid != -1) $command .= " AND d.id = $pid";
@@ -36,10 +36,12 @@ if (isset($_POST["bid"])) {
 
         $sameJudul = false;
         $samePenulis = false;
+        $samePenerbit = false;
         $sameTT = false;
         $samePustaka = false;
         $judul = "";
         $penulis = "";
+        $penerbit = -1;
         $tt = "";
         $dp = "";
 
@@ -56,6 +58,13 @@ if (isset($_POST["bid"])) {
             if ($res["penulis"] == $_POST["penulis"]) {
                 $samePenulis = true;
                 $response[] = "MP";
+            }
+        }
+        if (isset($_POST["penerbit"])) {
+            $penerbit = $_POST["penerbit"];
+            if ($res["penerbit"] == $_POST["penerbit"]) {
+                $samePenerbit = true;
+                $response[] = "MPE";
             }
         }
         if (isset($_POST["tt"])) {
@@ -75,12 +84,14 @@ if (isset($_POST["bid"])) {
 
         // Konfigurasi
         $command = "";
-        if (!$sameJudul || !$samePenulis || !$sameTT) {
+        if (!$sameJudul || !$samePenulis || !$sameTT || !$samePenerbit) {
             $command = "UPDATE buku SET";
             if (!$sameJudul) $command .= " judul = '$judul'";
             if (!$sameJudul && !$samePenulis) $command .= ",";
             if (!$samePenulis) $command .= " penulis = '$penulis'";
-            if (!$sameJudul && !$samePenulis && !$sameTT) $command .= ",";
+            if (!$sameJudul && !$samePenulis && !$samePenerbit) $command .= ",";
+            if (!$samePenerbit) $command .= " penerbit = $penerbit";
+            if (!$sameJudul && !$samePenulis && !$samePenerbit && !$sameTT) $command .= ",";
             if (!$sameTT) $command .= " tanggal_terbit = '$tt'";
             $command .= " WHERE id = '$bid'";  
         }

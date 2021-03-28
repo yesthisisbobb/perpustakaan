@@ -14,7 +14,7 @@ if (isset($_GET["bid"])) {
     $bid = $_GET["bid"];
     if (isset($_GET["pid"]) && $_GET["pid"] != "")  $pid = $_GET["pid"];
 
-    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.tanggal_terbit as tt, b.status as status, d.id as pid, d.buku_pustaka as pustaka FROM buku b LEFT JOIN daftar_pustaka d ON b.id = d.buku_utama WHERE b.id = '$bid'";
+    $command = "SELECT b.id as id, b.judul as judul, b.penulis as penulis, b.penerbit as penerbit, b.tanggal_terbit as tt, b.status as status, d.id as pid, d.buku_pustaka as pustaka FROM buku b LEFT JOIN daftar_pustaka d ON b.id = d.buku_utama WHERE b.id = '$bid'";
     if (isset($_GET["pid"]) && $_GET["pid"] != "") $command .= " AND d.id = $pid";
     $query = mysqli_query($conn, $command);
     if ($query) {
@@ -22,10 +22,14 @@ if (isset($_GET["bid"])) {
 
         $judul = $res["judul"];
         $penulis = $res["penulis"];
+        $penerbit = $res["penerbit"];
         $tt = $res["tt"];
         $dp = $res["pustaka"];
 
         $penulisArr = explode(", ", $penulis);
+
+        $cpenerbit = "SELECT * FROM penerbit";
+        $qpenerbit = mysqli_query($conn, $cpenerbit);
     }
 }
 ?>
@@ -51,6 +55,24 @@ if (isset($_GET["bid"])) {
             </td>
         </tr>
         <tr>
+            <td for="penerbit">Penerbit</td>
+            <td>
+                <select name="penerbit">
+                    <?php
+                    while ($pen = mysqli_fetch_assoc($qpenerbit)) {
+                        $id = $pen["id"];
+                        $nama = $pen["nama"];
+                        if ($id == $penerbit) {
+                            echo "<option value='$id' selected='selected'>$nama</option>";
+                        } else {
+                            echo "<option value='$id'>$nama</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td><label for="tt">Tanggal Terbit</label></td>
             <td><input type="date" name="tt" value="<?= $tt ?>"></td>
         </tr>
@@ -69,6 +91,7 @@ if (isset($_GET["bid"])) {
         let pid = $(this).attr("pid");
 
         let judul = $("#book-update input[name='judul']").val();
+        let penerbit = $("#book-update select[name='penerbit']").val();
         let tt = $("#book-update input[name='tt']").val();
         let dp = $("#book-update input[name='dp']").val();
         console.log(tt);
@@ -103,6 +126,7 @@ if (isset($_GET["bid"])) {
                 "pid": pid,
                 "bid": bid,
                 "judul": judul,
+                "penerbit": penerbit,
                 "tt": tt,
                 "dp": dp,
                 "penulis": penulisDb

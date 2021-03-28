@@ -6,6 +6,7 @@ include("../db/config.php");
     <div class="book-options">
         <button class="button-neutral" id="book-control-close"><i class="fas fa-times"></i>&nbsp&nbspTutup Menu</button>
         <button class="button-neutral" id="book-insert-show"><i class="fas fa-plus"></i>&nbsp&nbspTambah Buku</button>
+        <button class="button-neutral" id="penerbit-insert-show"><i class="fas fa-plus"></i>&nbsp&nbspTambah Penerbit</button>
     </div>
     <div id="book-list">
         <table id="book-table" class="display">
@@ -14,6 +15,7 @@ include("../db/config.php");
                     <th>ID</th>
                     <th>Judul</th>
                     <th>Penulis</th>
+                    <th>Penerbit</th>
                     <th>Tanggal Terbit</th>
                     <th>Status</th>
                     <th>Pustaka</th>
@@ -30,6 +32,7 @@ include("../db/config.php");
 <script>
     let isInsert = false;
     let isUpdate = false;
+    let isPInsert = false;
 
     toastr.options = {
         "closeButton": false,
@@ -53,6 +56,7 @@ include("../db/config.php");
     $("#book-control-close").click(function() {
         isInsert = false;
         isUpdate = false;
+        isPInsert = false;
 
         $("#book-controls-container").html("");
     });
@@ -60,7 +64,14 @@ include("../db/config.php");
     $("#book-insert-show").click(function() {
         isInsert = true;
         isUpdate = false;
+        isPInsert = false;
         $("#book-controls-container").load("insertbuku.php");
+    });
+    $("#penerbit-insert-show").click(function() {
+        isInsert = false;
+        isUpdate = false;
+        isPInsert = true;
+        $("#book-controls-container").load("insertpenerbit.php");
     });
     $("#book-list").on("click", ".buku-actions", function() {
         console.log($(this).attr("bid"), $(this).attr("pid"));
@@ -107,7 +118,9 @@ include("../db/config.php");
                     $.ajax({
                         url: "../processes/deletebuku.php",
                         method: "POST",
-                        data: {"bid" : bid},
+                        data: {
+                            "bid": bid
+                        },
                         success: function(data) {
                             console.log(data);
                             sdata = JSON.parse(data);
@@ -123,6 +136,7 @@ include("../db/config.php");
                                     icon: "success",
                                     showConfirmButton: true
                                 });
+                                reloadDT();
                             } else {
                                 Swal.fire({
                                     title: "Gagal",

@@ -1,3 +1,10 @@
+<?php
+include("../db/config.php");
+
+$cpenerbit = "SELECT * FROM penerbit";
+$qpenerbit = mysqli_query($conn, $cpenerbit);
+
+?>
 <div class="book-controls" id="book-insert">
     <table>
         <tr>
@@ -9,6 +16,20 @@
             <td>
                 <input type="text" name="penulis" class="penulis">
                 <br><button id="add-penulis" class="button-disabled"><i class="fas fa-plus"></i></button><button id="rmv-penulis" class="button-disabled"><i class="fas fa-minus"></i></button>
+            </td>
+        </tr>
+        <tr>
+            <td for="penerbit">Penerbit</td>
+            <td>
+                <select name="penerbit">
+                    <?php
+                    while ($pen = mysqli_fetch_assoc($qpenerbit)) {
+                        $id = $pen["id"];
+                        $nama = $pen["nama"];
+                        echo "<option value='$id'>$nama</option>";
+                    }
+                    ?>
+                </select>
             </td>
         </tr>
         <tr>
@@ -29,6 +50,7 @@
     $("#add-buku").click(function() {
         let judul = $("#book-insert input[name='judul']").val();
         let tt = $("#book-insert input[name='tt']").val();
+        let penerbit = $("#book-insert select[name='penerbit']").val();
 
         let penulisArr = [];
         let penulisDb = "";
@@ -74,14 +96,15 @@
             data: {
                 "judul": judul,
                 "penulis": penulisDb,
+                "penerbit": penerbit,
                 "tt": tt,
                 "dp": dpDb
             },
             success: function(pdata) {
                 console.log(pdata + " - " + typeof(pdata));
 
-                let is1Found = false;
-                let is2Found = false;
+                let is1Found = false; // Insert ke tabel buku
+                let is2Found = false; // Insert ke tabel daftar_pustaka
 
                 for (let i = 0; i < pdata.length; i++) {
                     const code = pdata[i];
@@ -92,10 +115,8 @@
                         is2Found = true;
                     }
                 }
-                if (is1Found && is2Found) {
+                if (is1Found) {
                     action = "success";
-                } else {
-                    action = "failed";
                 }
             },
             error: function(error) {
